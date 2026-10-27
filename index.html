@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自己認識・認知バイアスチェック</title>
+<style>
+    body { font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background-color: #f7f9fc; color: #333; line-height: 1.6; padding: 20px; }
+    .container { max-width: 600px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    h1 { font-size: 1.5rem; text-align: center; color: #2c3e50; margin-bottom: 20px; }
+    .question { margin-bottom: 25px; }
+    .question p { font-weight: bold; margin-bottom: 10px; }
+    .options { display: flex; justify-content: space-between; gap: 5px; flex-wrap: wrap; }
+    .options label { flex: 1; min-width: 45px; text-align: center; background: #edf2f7; padding: 10px 5px; border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 0.9rem; }
+    .options input[type="radio"] { display: none; }
+    .options input[type="radio"]:checked + label { background: #3182ce; color: white; font-weight: bold; }
+    .btn { display: block; width: 100%; padding: 15px; background: #2b6cb0; color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 30px; transition: background 0.3s; }
+    .btn:hover { background: #2c5282; }
+    #result { margin-top: 30px; padding: 20px; border-radius: 8px; display: none; }
+    .score-high { background: #fff5f5; border-left: 5px solid #e53e3e; }
+    .score-mid { background: #fffff0; border-left: 5px solid #d69e2e; }
+    .score-low { background: #f0fff4; border-left: 5px solid #38a169; }
+    .advice-title { font-weight: bold; margin-top: 15px; color: #2c3e50; }
+    .advice-list { margin-top: 10px; padding-left: 20px; }
+    .advice-list li { margin-bottom: 8px; }
+    .error { color: #e53e3e; text-align: center; margin-top: 15px; font-weight: bold; display: none; }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>人間関係における<br>認知バイアスチェック</h1>
+    <p style="text-align:center; font-size:0.9rem; color:#666;">各質問に対し「1.全く当てはまらない」〜「5.非常に当てはまる」を選んでください。</p>
+    <form id="quizForm"></form>
+    <div id="errorMsg" class="error">すべての質問に回答してください。</div>
+    <button type="button" class="btn" onclick="calculateScore()">結果を見る</button>
+    <div id="result"></div>
+</div>
+
+<script>
+    const questions = [
+        "相手からの連絡の返信が遅いと、「何か怒らせるようなことを言ったかも」と不安になる。",
+        "複数人が集まっている場所で笑い声が聞こえると、「自分のことを笑っているのでは」と感じる。",
+        "誰かに褒められても、「お世辞だろう」「裏がある」と素直に受け取れない。",
+        "人と話した後、「あんなこと言わなければよかった」と発言を何度も振り返って後悔する。",
+        "相手の表情が少し曇ったり、そっけない態度をとられたりすると、「嫌われた」と極端に結論づける。",
+        "「本当の自分を知られたら、きっと人は離れていく」という漠然とした恐怖感がある。",
+        "自分の意見や希望を言うよりも、相手に合わせて波風を立てないようにする方が圧倒的に多い。",
+        "自分がグループの中で少し浮いている、あるいは歓迎されていないように感じることがよくある。",
+        "友人が他の人と楽しそうにしているのを見ると、見捨てられたような気持ちになる。",
+        "他人は基本的に、自分の長所よりも短所や失敗に目を向けていると思う。"
+    ];
+
+    const form = document.getElementById('quizForm');
+    questions.forEach((q, index) => {
+        const qDiv = document.createElement('div');
+        qDiv.className = 'question';
+        let optionsHtml = '';
+        for(let i=1; i<=5; i++) {
+            optionsHtml += `<input type="radio" name="q${index}" id="q${index}_${i}" value="${i}"><label for="q${index}_${i}">${i}</label>`;
+        }
+        qDiv.innerHTML = `<p>Q${index + 1}. ${q}</p><div class="options">${optionsHtml}</div>`;
+        form.appendChild(qDiv);
+    });
+
+    function calculateScore() {
+        let totalScore = 0;
+        let answeredAll = true;
+
+        for(let i=0; i<questions.length; i++) {
+            const radios = document.getElementsByName(`q${i}`);
+            let answered = false;
+            for(let radio of radios) {
+                if(radio.checked) {
+                    totalScore += parseInt(radio.value);
+                    answered = true;
+                    break;
+                }
+            }
+            if(!answered) answeredAll = false;
+        }
+
+        const errorMsg = document.getElementById('errorMsg');
+        const resultDiv = document.getElementById('result');
+
+        if(!answeredAll) {
+            errorMsg.style.display = 'block';
+            resultDiv.style.display = 'none';
+            return;
+        }
+        
+        errorMsg.style.display = 'none';
+        
+        let resultHtml = `<h2>あなたのスコア: ${totalScore}点 / 50点</h2>`;
+        
+        if(totalScore >= 36) {
+            resultDiv.className = 'score-high';
+            resultHtml += `
+                <p><strong style="color:#e53e3e;">【高警戒ゾーン】</strong><br>
+                「嫌われているに違いない」というフィルター（敵意帰属バイアス）が強く働いている可能性があります。過去の経験から、自分を守るための防衛本能が過剰に作動している状態です。</p>
+                <div class="advice-title">◆ 具体的な対策（認知行動療法アプローチ）</div>
+                <ul class="advice-list">
+                    <li><strong>事実と解釈を分ける：</strong>「返信がない（事実）」と「嫌われた（解釈）」を切り離し、事実だけを見るようにします。</li>
+                    <li><strong>代替仮説を3つ立てる：</strong>「相手が忙しい」「体調不良」「忘れているだけ」など、悪意以外の理由を論理的にリストアップします。</li>
+                    <li><strong>ラベリング（メタ認知）：</strong>「あ、また『嫌われバイアス』が発動したな」と心の中でつぶやき、感情から少し距離を置く訓練をします。</li>
+                </ul>`;
+        } else if(totalScore >= 21) {
+            resultDiv.className = 'score-mid';
+            resultHtml += `<p><strong>【平均ゾーン】</strong><br>全体的にはフラットですが、ストレスが溜まっていたり特定の状況下において、「嫌われているかも」と不安を感じやすい傾向があります。思い込みすぎないよう、事実確認を大切にしましょう。</p>`;
+        } else {
+            resultDiv.className = 'score-low';
+            resultHtml += `<p><strong>【フラット・ゾーン】</strong><br>他者の言動をありのままに受け取れており、人間関係における過度な不安や思い込みは少ない状態です。現状のフラットな視点を維持してください。</p>`;
+        }
+
+        resultDiv.innerHTML = resultHtml;
+        resultDiv.style.display = 'block';
+    }
+</script>
+</body>
+</html>
