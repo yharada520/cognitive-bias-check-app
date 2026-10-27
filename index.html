@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7f4">
+  <meta name="description" content="人間関係で感じる拒絶への不安や受け取り方の傾向を、10の質問で振り返るセルフチェックです。">
+  <title>人間関係の認知バイアスチェック</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", sans-serif;
+      color: #23332f;
+      background: #f5f7f4;
+      font-synthesis: none;
+      line-height: 1.7;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 32px 16px 56px;
+    }
+
+    main {
+      width: min(100%, 760px);
+      margin: 0 auto;
+    }
+
+    .intro,
+    .question,
+    .result {
+      border: 1px solid #dfe7df;
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: 0 8px 24px rgb(35 51 47 / 5%);
+    }
+
+    .intro {
+      padding: 32px;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: #43735f;
+      font-size: 0.875rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.7rem, 5vw, 2.25rem);
+      line-height: 1.35;
+    }
+
+    .intro p:last-child {
+      margin-bottom: 0;
+    }
+
+    .notice {
+      padding: 12px 16px;
+      border-left: 4px solid #79a58b;
+      border-radius: 4px;
+      background: #f1f7f1;
+      font-size: 0.925rem;
+    }
+
+    .progress {
+      margin: 22px 4px 12px;
+      color: #52635b;
+      font-size: 0.9rem;
+    }
+
+    .question-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .question {
+      min-width: 0;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .question legend {
+      width: 100%;
+      padding: 0;
+      font-weight: 650;
+    }
+
+    .question-number {
+      display: block;
+      margin-bottom: 4px;
+      color: #43735f;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .choices {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .choice {
+      position: relative;
+      min-width: 0;
+    }
+
+    .choice input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+    }
+
+    .choice label {
+      display: flex;
+      min-height: 76px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      padding: 8px 4px;
+      border: 1px solid #dfe7df;
+      border-radius: 10px;
+      color: #52635b;
+      cursor: pointer;
+      text-align: center;
+      font-size: 0.75rem;
+      line-height: 1.35;
+      transition: background-color 140ms ease, border-color 140ms ease;
+    }
+
+    .choice label strong {
+      color: #23332f;
+      font-size: 1.05rem;
+    }
+
+    .choice input:checked + label {
+      border-color: #43735f;
+      background: #edf5ef;
+      box-shadow: inset 0 0 0 1px #43735f;
+    }
+
+    .choice input:focus-visible + label {
+      outline: 3px solid #78a990;
+      outline-offset: 2px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    button {
+      min-height: 48px;
+      padding: 10px 20px;
+      border: 0;
+      border-radius: 10px;
+      background: #356b52;
+      color: #fff;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+    }
+
+    button:hover {
+      background: #28583f;
+    }
+
+    button:focus-visible {
+      outline: 3px solid #78a990;
+      outline-offset: 3px;
+    }
+
+    button.secondary {
+      border: 1px solid #d2ddd4;
+      background: transparent;
+      color: #365447;
+    }
+
+    button.secondary:hover {
+      background: #edf3ee;
+    }
+
+    .result {
+      padding: 24px;
+      margin-top: 24px;
+      border-top: 5px solid #79a58b;
+    }
+
+    .result[hidden] {
+      display: none;
+    }
+
+    .result h2 {
+      margin: 0 0 8px;
+      font-size: 1.5rem;
+    }
+
+    .score {
+      margin: 12px 0;
+      color: #356b52;
+      font-size: 2.25rem;
+      font-weight: 750;
+      line-height: 1.3;
+    }
+
+    .result h3 {
+      margin-bottom: 4px;
+    }
+
+    .result ul {
+      padding-left: 1.4rem;
+    }
+
+    .result li + li {
+      margin-top: 8px;
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 16px 12px 36px;
+      }
+
+      .intro {
+        padding: 24px 20px;
+      }
+
+      .question {
+        padding: 16px 12px;
+      }
+
+      .choices {
+        gap: 5px;
+      }
+
+      .choice label {
+        min-height: 72px;
+        padding: 6px 2px;
+        font-size: 0.67rem;
+      }
+
+      .choice label strong {
+        font-size: 1rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="intro">
+      <p class="eyebrow">SELF-CHECK · 10 QUESTIONS</p>
+      <h1>人間関係の認知バイアスチェック</h1>
+      <p>人とのやりとりで「嫌われているのでは」と感じるときの、受け取り方の傾向を振り返るセルフチェックです。</p>
+      <p class="notice">診断や医療的な評価ではありません。直近の人間関係を思い浮かべ、正解・不正解を気にせず回答してください。回答内容はこのページ内でのみ計算され、送信・保存されません。</p>
+    </header>
+
+    <p class="progress" id="progress" aria-live="polite">回答済み: 0 / 10</p>
+    <form id="check-form" novalidate>
+      <div class="question-list">
+        <fieldset class="question">
+          <legend><span class="question-number">質問 1</span>相手からの返信が遅いと、「避けられているのかもしれない」と感じる。</legend>
+          <div class="choices">
+            <div class="choice"><input id="q1-1" type="radio" name="q1" value="1"><label for="q1-1"><strong>1</strong>全く<br>当てはまらない</label></div>
+            <div class="choice"><input id="q1-2" type="radio" name="q1" value="2"><label for="q1-2"><strong>2</strong>あまり<br>当てはまらない</label></div>
+            <div class="choice"><input id="q1-3" type="radio" name="q1" value="3"><label for="q1-3"><strong>3</strong>どちらとも<br>いえない</label></div>
+            <div class="choice"><input id="q1-4" type="radio" name="q1" value="4"><label for="q1-4"><strong>4</strong>やや<br>当てはまる</label></div>
+            <div class="choice"><input id="q1-5" type="radio" name="q1" value="5"><label for="q1-5"><strong>5</strong>非常に<br>当てはまる</label></div>
+          </div>
+        </fieldset>
+        <fieldset class="question">
+          <legend><span class="question-number">質問 2</span>相手の口調がいつもより静かだと、自分に怒っているのではと思う。</legend>
+          <div class="choices">
+            <div class="choice"><input id="q2-1" type="radio" name="q2" value="1"><label for="q2-1"><strong>1</strong>全く<br>当てはまらない</label></div>
+            <div class="choice"><input id="q2-2" type="radio" name="q2" value="2"><label for="q2-2"><strong>2</strong>あまり<br>当てはまらない</label></div>
+            <div class="choice"><input id="q2-3" type="radio" name="q2" value="3"><label for="q2-3"><strong>3</strong>どちらとも<br>いえない</label></div>
+            <div class="choice"><input id="q2-4" type="radio" name="q2" value="4"><label for="q2-4"><strong>4</strong>やや<br>当てはまる</label></div>
+            <div class="choice"><input id="q2-5" type="radio" name="q2" value="5"><label for="q2-5"><strong>5</strong>非常に<br>当てはまる</label></div>
+          </div>
+        </fieldset>
+        <fieldset class="question">
+          <legend><span class="question-number">質問 3</span>会話が途切れると、「自分の話がつまらなかった」と考えがちだ。</legend>
+          <div class="choices">
+            <div class="choice"><input id="q3-1" type="radio" name="q3" value="1"><label for="q3-1"><strong>1</strong>全く<br>当てはまらない</label></div>
+            <div class="choice"><input id="q3-2" type="radio" name="q3" value="2"><label for="q3-2"><strong>2</strong>あまり<br>当てはまらない</label></div>
+            <div class="choice"><input id="q3-3" type="radio" name="q3" value="3"><label for="q3-3"><strong>3</strong>どちらとも<br>いえない</label></div>
+            <div class="choice"><input id="q3-4" type="radio" name="q3" value="4"><label for="q3-4"><strong>4</strong>やや<br>当てはまる</label></div>
+            <div class="choice"><input id="q3-5" type="radio" name="q3" value="5"><label for="q3-5"><strong>5</strong>非常に<br>当てはまる</label></div>
+          </div>
+        </fieldset>
+        <fieldset class="question">
+          <legend><span class="question-number">質問 4</span>誘いを断られると、都合よりも「自分と過ごしたくないから」と感じる。</legend>
+          <div class="choices">
+            <div class="choice"><input id="q4-1" type="radio" name="q4" value="1"><label for="q4-1"><strong>1</strong>全く<br>当てはまらない</label></div>
+            <div class="choice"><input id="q4-2" type="radio" name="q4" value="2"><label for="q4-2"><strong>2</strong>あまり<br>当てはまらない</label></div>
+            <div class="choice"><input id="q4-3" type="radio" name="q4" value="3"><label for="q4-3"><strong>3</strong>どちらとも<br>いえない</label></div>
+            <div class="choice"><input id="q4-4" type="radio" name="q4" value="4"><label for="q4-4"><strong>4</strong>やや<br>当てはまる</label></div>
+            <div class="choice"><input id="q4-5" type="radio" name="q4" value="5"><label for="q4-5"><strong>5</strong>非常に<br>当てはまる</label></div>
+          </div>
+        </fieldset>
+        <fieldset class="question">
+          <legend><span class="question-number">質問 5</span>相手の何気ない言葉から、否定的な意味を読み取ることがよくある。</legend>
+          <div class="choices">
+            <div class="choice"><input id="q5-1" type="radio" name="q5" value="1"><label for="q5-1"><strong>1</strong>全く<br>当てはまらない</label></div>
+            <div class="choice"><input id="q5-2" type="radio" name="q5" value="2"><label for="q5-2"><strong>2</strong>あまり<br>当てはまらない</label></div>
+            <div class="choice"><input id="q5-3" type="radio" name="q5" value="3"><label for="q5-3"><strong>3</strong>どちらとも<br>いえない</label></div>
+            <div class="choice"><input id="q5-4" type="radio" name="q5" value="4"><label for="q5-4"><strong>4</strong>やや<br>当てはまる</label></div>
+            <div class="choice"><input id="q5-5" type="radio" name="q5" value="5"><label for="q5-5"><strong>5</strong>非常に<br>当てはまる</label></div>
+          </div>
+        </fieldset>
+        <fieldset class="question">
+          <legend><span class="question-number">質問 6</span>複数人の会話で、自分以外が盛り上がっていると疎外感を覚える。</legend>
+          <div class="choices">
+            <div class="choice"><input id="q6-1" type="radio" name="q6" value="1"><label for="q6-1"><strong>1</strong>全く<br>当てはまらない</label></div>
+            <div class="choice"><input id="q6-2" type="radio" name="q6" value="2"><label for="q6-2"><strong>2</strong>あまり<br>当てはまらない</label></div>
+            <div class="choice"><input id="q6-3" type="radio" name="q6" value="3"><label for="q6-3"><strong>3</strong>どちらとも<br>いえない</label></div>
+            <div class="choice"><input id="q6-4" type="radio" name="q6" value="4"><label for="q6-4"><strong>4</strong>やや<br>当てはまる</label></div>
+            <div class="choice"><input id="q6-5" type="radio" name="q6" value="5"><label for="q6-5"><strong>5</strong>非常に<br>当てはまる</label></div>
+          </div>
+        </fieldset>
+        <fieldset class="question">
+          <legend><span class="question-number">質問 7</span>人と会った後、自分の言動に問題がなかったか何度も振り返る。</legend>
+          <div class="choices">
+            <div class="choice"><input id="q7-1" type="radio" name="q7" value="1"><label for="q7-1"><strong>1</strong>全く<br>当てはまらない</label></div>
+            <div class="choice"><input id="q7-2" type="radio" name="q7" value="2"><label for="q7-2"><strong>2</strong>あまり<br>当てはまらない</label></div>
+            <div class="choice"><input id="q7-3" type="radio" name="q7" value="3"><label for="q7-3"><strong>3</strong>どちらとも<br>いえない</label></div>
+            <div class="choice"><input id="q7-4" type="radio" name="q7" value="4"><label for="q7-4"><strong>4</strong>やや<br>当てはまる</label></div>
+            <div class="choice"><input id="q7-5" type="radio" name="q7" value="5"><label for="q7-5"><strong>5</strong>非常に<br>当てはまる</label></div>
+          </div>
+        </fieldset>
+        <fieldset class="question">
+          <legend><span class="question-number">質問 8</span>相手の反応が薄いと、自分が何か悪いことをしたのではと思う。</legend>
+          <div class="choices">
+            <div class="choice"><input id="q8-1" type="radio" name="q8" value="1"><label for="q8-1"><strong>1</strong>全く<br>当てはまらない</label></div>
+            <div class="choice"><input id="q8-2" type="radio" name="q8" value="2"><label for="q8-2"><strong>2</strong>あまり<br>当てはまらない</label></div>
+            <div class="choice"><input id="q8-3" type="radio" name="q8" value="3"><label for="q8-3"><strong>3</strong>どちらとも<br>いえない</label></div>
+            <div class="choice"><input id="q8-4" type="radio" name="q8" value="4"><label for="q8-4"><strong>4</strong>やや<br>当てはまる</label></div>
+            <div class="choice"><input id="q8-5" type="radio" name="q8" value="5"><label for="q8-5"><strong>5</strong>非常に<br>当てはまる</label></div>
+          </div>
+        </fieldset>
+        <fieldset class="question">
+          <legend><span class="question-number">質問 9</span>一度のそっけない態度から、相手との関係全体が悪いと考えがちだ。</legend>
+          <div class="choices">
+            <div class="choice"><input id="q9-1" type="radio" name="q9" value="1"><label for="q9-1"><strong>1</strong>全く<br>当てはまらない</label></div>
+            <div class="choice"><input id="q9-2" type="radio" name="q9" value="2"><label for="q9-2"><strong>2</strong>あまり<br>当てはまらない</label></div>
+            <div class="choice"><input id="q9-3" type="radio" name="q9" value="3"><label for="q9-3"><strong>3</strong>どちらとも<br>いえない</label></div>
+            <div class="choice"><input id="q9-4" type="radio" name="q9" value="4"><label for="q9-4"><strong>4</strong>やや<br>当てはまる</label></div>
+            <div class="choice"><input id="q9-5" type="radio" name="q9" value="5"><label for="q9-5"><strong>5</strong>非常に<br>当てはまる</label></div>
+          </div>
+        </fieldset>
+        <fieldset class="question">
+          <legend><span class="question-number">質問 10</span>嫌われている証拠がなくても、その考えを頭から離すのが難しい。</legend>
+          <div class="choices">
+            <div class="choice"><input id="q10-1" type="radio" name="q10" value="1"><label for="q10-1"><strong>1</strong>全く<br>当てはまらない</label></div>
+            <div class="choice"><input id="q10-2" type="radio" name="q10" value="2"><label for="q10-2"><strong>2</strong>あまり<br>当てはまらない</label></div>
+            <div class="choice"><input id="q10-3" type="radio" name="q10" value="3"><label for="q10-3"><strong>3</strong>どちらとも<br>いえない</label></div>
+            <div class="choice"><input id="q10-4" type="radio" name="q10" value="4"><label for="q10-4"><strong>4</strong>やや<br>当てはまる</label></div>
+            <div class="choice"><input id="q10-5" type="radio" name="q10" value="5"><label for="q10-5"><strong>5</strong>非常に<br>当てはまる</label></div>
+          </div>
+        </fieldset>
+      </div>
+      <p class="actions">
+        <button type="submit">結果を見る</button>
+        <button class="secondary" type="reset">回答をリセット</button>
+      </p>
+    </form>
+
+    <section class="result" id="result" aria-live="polite" aria-atomic="true" hidden>
+      <h2 id="result-heading">チェック結果</h2>
+      <p class="score" id="score"></p>
+      <p id="zone-description"></p>
+      <div id="advice"></div>
+      <p class="notice">このスコアは回答を振り返るための目安であり、心理状態や人間関係を判定するものではありません。つらさが続く場合は、信頼できる人や専門家に相談することも検討してください。</p>
+    </section>
+  </main>
+
+  <script>
+    const form = document.querySelector("#check-form");
+    const progress = document.querySelector("#progress");
+    const result = document.querySelector("#result");
+    const scoreDisplay = document.querySelector("#score");
+    const zoneDescription = document.querySelector("#zone-description");
+    const advice = document.querySelector("#advice");
+
+    function updateProgress() {
+      const answered = form.querySelectorAll("input[type=radio]:checked").length;
+      progress.textContent = `回答済み: ${answered} / 10`;
+    }
+
+    form.addEventListener("change", updateProgress);
+
+    form.addEventListener("reset", () => {
+      result.hidden = true;
+      progress.textContent = "回答済み: 0 / 10";
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const unanswered = [...form.querySelectorAll(".question")].find((question) => {
+        return !question.querySelector("input[type=radio]:checked");
+      });
+
+      if (unanswered) {
+        progress.textContent = "すべての質問に回答してください。";
+        unanswered.querySelector("input").focus();
+        return;
+      }
+
+      const total = [...form.querySelectorAll("input[type=radio]:checked")]
+        .reduce((sum, input) => sum + Number(input.value), 0);
+      let zone;
+      let description;
+      let suggestions;
+
+      if (total >= 38) {
+        zone = "高警戒ゾーン";
+        description = "相手の反応を拒絶のサインとして受け取りやすい傾向があるかもしれません。感じたことを否定せず、事実と解釈を分けてみましょう。";
+        suggestions = [
+          "事実と解釈を分ける: 「返信がまだない」は事実、「嫌われた」は解釈、と書き分けてみます。",
+          "代替仮説を考える: 忙しい、通知に気づいていない、返信を考えているなど、別の可能性を2つ挙げます。",
+          "ラベリングする: 「嫌われた」と結論づける代わりに、「いま拒絶される不安を感じている」と状態に名前をつけます。"
+        ];
+      } else if (total >= 24) {
+        zone = "平均ゾーン";
+        description = "人間関係の場面によって、不安が強まることがあるようです。気になったときに、判断を急がず状況を確かめる習慣が役立ちます。";
+        suggestions = [
+          "気になった出来事について、見聞きした事実と自分の受け取り方を分けて整理します。",
+          "相手の事情など、別の説明が成り立つかを一つ考えてみます。",
+          "不安が出たら「いま不安を感じている」と言葉にして、気持ちと事実を区別します。"
+        ];
+      } else {
+        zone = "フラット・ゾーン";
+        description = "今回の回答では、拒絶への不安を強く感じる傾向は比較的少ないようです。特定の状況だけ気になる場合は、その場面に注目してみましょう。";
+        suggestions = [
+          "気になる出来事があれば、事実と自分の解釈を分けてみます。",
+          "一つの受け取り方に決めつけず、ほかの可能性も考えてみます。",
+          "結果は固定的な性格評価ではありません。状況や時期によって感じ方が変わることがあります。"
+        ];
+      }
+
+      scoreDisplay.textContent = `${total} / 50点`;
+      zoneDescription.textContent = `${zone}: ${description}`;
+      advice.replaceChildren();
+      const heading = document.createElement("h3");
+      heading.textContent = "振り返りのヒント";
+      const list = document.createElement("ul");
+      suggestions.forEach((suggestion) => {
+        const item = document.createElement("li");
+        item.textContent = suggestion;
+        list.append(item);
+      });
+      advice.append(heading, list);
+      result.hidden = false;
+      result.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  </script>
+</body>
+</html>
