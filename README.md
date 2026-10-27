@@ -14,13 +14,5 @@
 2. 10個の質問すべてに対し、「1. 全く当てはまらない」から「5. 非常に当てはまる」のいずれかを選択します。
 3. 「結果を見る」ボタンをクリックすると、総合スコアと現在地のフィードバックが表示されます。
 
-## デプロイ方法 (開発者向け)
-本リポジトリのファイルを用いて、GitHub Pagesで簡単にホスティングが可能です。
-
-1. 本リポジトリの `Settings` タブから `Pages` を選択します。
-2. `Build and deployment` の `Source` を `Deploy from a branch` に設定します。
-3. `Branch` を `main` に指定し、`Save` をクリックします。
-4. 数分待つと、URLが発行されてアプリが公開されます。
-
 ## ライセンス
 This project is licensed under the MIT License.
